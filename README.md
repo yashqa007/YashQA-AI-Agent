@@ -26,35 +26,35 @@ from natural language requirements using LLMs.
 ---
 
 ## 📁 Project Structure
-YashQA-AI-Agent/
-│── agents/
-│ ├── test_case_generator.py
-│ ├── playwright_generator.py
-│
-|── output/
-│── prompts/
-│── utils/
-│── main.py
-│── .env
-│── README.md
-│── requirements.txt
+- YashQA-AI-Agent/
+- |── agents/
+1.    ├── test_case_generator.py
+2.    ├── playwright_generator.py
+  │
+- |── output/
+- │── prompts/
+- │── utils/
+- │── main.py
+- │── .env
+- │── README.md
+- │── requirements.txt
 
 ---
 
 ## ⚙️ Setup
 
 ```bash ```
-git clone https://github.com/yashqa007/YashQA-AI-Agent.git
-cd YashQA-AI-Agent
+- git clone https://github.com/yashqa007/YashQA-AI-Agent.git
+- cd YashQA-AI-Agent
 
-python -m venv venv
-source venv/bin/activate
+- python -m venv venv
+- source venv/bin/activate
 
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
-🔐 Environment Variables
-Create .env file:
-GROQ_API_KEY=your_api_key_here ```
+## 🔐 Environment Variables
+- Create .env file:
+- GROQ_API_KEY=your_api_key_here ```
 
 ## ▶️ Run
 python main.py
@@ -70,13 +70,13 @@ Manual Test Cases OR
 Playwright TypeScript Script
 
 🚀 Upcoming Features
-Web UI integration
-FastAPI backend
-Live deployment
+1. Web UI integration
+2. FastAPI backend
+3. Live deployment
 
 ## 👨‍💻 Author
 **Yash Rahate**  
 QA Automation Engineer  
-🔗 GitHub: https://github.com/yashqa007
-🔗 Portfolio : https://yashqa007.github.io/Yash-QA-Portfolio/
+- 🔗 GitHub: https://github.com/yashqa007
+- 🔗 Portfolio : https://yashqa007.github.io/Yash-QA-Portfolio/
 
