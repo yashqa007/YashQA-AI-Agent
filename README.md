@@ -39,12 +39,11 @@ YashQA-AI-Agent/
 │── README.md
 │── requirements.txt
 
-
 ---
 
 ## ⚙️ Setup
 
-```bash
+```bash ```
 git clone https://github.com/yashqa007/YashQA-AI-Agent.git
 cd YashQA-AI-Agent
 
@@ -53,31 +52,31 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-## 🔐 Environment Variables
+🔐 Environment Variables
 Create .env file:
-
-GROQ_API_KEY=your_api_key_here
+GROQ_API_KEY=your_api_key_here ```
 
 ## ▶️ Run
-```bash
 python main.py
 
-##💡 Example
+## 💡 Example
 Input:
 
 Login functionality with email and password
 
 Output:
+
 Manual Test Cases OR
 Playwright TypeScript Script
 
-##🚀 Upcoming Features
+🚀 Upcoming Features
 Web UI integration
 FastAPI backend
 Live deployment
 
-# 👨‍💻 Author
-Yash Rahate
+## 👨‍💻 Author
+**Yash Rahate**  
 QA Automation Engineer  
 🔗 GitHub: https://github.com/yashqa007
 🔗 Portfolio : https://yashqa007.github.io/Yash-QA-Portfolio/
+
