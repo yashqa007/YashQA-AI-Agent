@@ -28,9 +28,9 @@ from natural language requirements using LLMs.
 ## 📁 Project Structure
 - YashQA-AI-Agent/
 - |── agents/
-1.    ├── test_case_generator.py
-2.    ├── playwright_generator.py
-  │
+- |  ├── test_case_generator.py
+- |  ├── playwright_generator.py
+- │
 - |── output/
 - │── prompts/
 - │── utils/
@@ -69,14 +69,14 @@ Output:
 Manual Test Cases OR
 Playwright TypeScript Script
 
-🚀 Upcoming Features
+## 🚀 Upcoming Features
 1. Web UI integration
 2. FastAPI backend
 3. Live deployment
 
 ## 👨‍💻 Author
 **Yash Rahate**  
-QA Automation Engineer  
+**QA Automation Engineer**
 - 🔗 GitHub: https://github.com/yashqa007
 - 🔗 Portfolio : https://yashqa007.github.io/Yash-QA-Portfolio/
 

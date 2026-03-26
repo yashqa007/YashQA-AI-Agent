@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Yash QA AI Agent</title>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --text: #ffffff;
+      --card: #1e293b;
+      --input: #020617;
+      --accent: #22c55e;
+    }
+
+    body.light {
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --card: #e2e8f0;
+      --input: #ffffff;
+      --accent: #16a34a;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: var(--input);
+      border-bottom: 1px solid #334155;
+    }
+
+    .toggle-btn {
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: none;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .message {
+      max-width: 70%;
+      margin: 10px 0;
+    }
+
+    .bubble {
+      padding: 12px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+    }
+
+    .user .bubble {
+      background: #2563eb;
+      color: white;
+      margin-left: auto;
+    }
+
+    .bot .bubble {
+      background: var(--card);
+    }
+
+    .actions {
+      display: none;
+      margin-top: 5px;
+      gap: 10px;
+    }
+
+    .message:hover .actions {
+      display: flex;
+    }
+
+    .actions button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 12px;
+    }
+
+    .controls {
+      padding: 10px 20px;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+      padding: 15px;
+      background: var(--input);
+    }
+
+    textarea {
+      flex: 1;
+      height: 50px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    button.send {
+      background: var(--accent);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      font-size: 13px;
+    }
+
+    .loader {
+      border: 3px solid #ccc;
+      border-top: 3px solid var(--accent);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+    .version-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  position: relative;
+}
+
+.dot::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  opacity: 0.6;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+    select {
+  min-width: 140px;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div>🤖 Yash QA AI Agent</div>
+
+  <div style="display: flex; gap: 10px; align-items: center;">
+    
+    <div class="version-badge" title="App is in beta. Features may change and minor issues can occur.">
+  <span class="dot"></span>
+  v1.0-beta
+</div>
+
+    <button class="toggle-btn" onclick="toggleTheme()">🌗</button>
+  
+  </div>
+</header>
+
+
+<div id="chat"></div>
+
+<div class="input-area">
+  <textarea id="requirement" placeholder="Enter requirement..."></textarea>
+
+  <select id="type">
+    <option value="manual" selected>Manual</option>
+    <option value="automation">Automation</option>
+  </select>
+
+  <button class="send" onclick="generate()">Send</button>
+</div>
+
+<script>
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+
+function createMessage(content, isUser, type) {
+  const msg = document.createElement("div");
+  msg.className = "message " + (isUser ? "user" : "bot");
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  const pre = document.createElement("pre");
+  pre.innerText = content;
+  bubble.appendChild(pre);
+
+  msg.appendChild(bubble);
+
+  if (!isUser) {
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    // Copy
+    const copyBtn = document.createElement("button");
+    copyBtn.innerText = "📋 Copy";
+    copyBtn.onclick = () => {
+  navigator.clipboard.writeText(content);
+
+  copyBtn.innerText = "✅ Copied";
+
+  setTimeout(() => {
+    copyBtn.innerText = "📋 Copy";
+  }, 2000);
+};
+
+    // Download
+    const downloadBtn = document.createElement("button");
+    downloadBtn.innerText = "⬇ Download";
+    downloadBtn.onclick = () => downloadFile(content, type);
+
+    actions.appendChild(copyBtn);
+    actions.appendChild(downloadBtn);
+
+    msg.appendChild(actions);
+  }
+
+  return msg;
+}
+
+function downloadFile(content, type) {
+  const blob = new Blob([content], { type: "text/plain" });
+  const a = document.createElement("a");
+
+  const ext = type === "automation" ? "ts" : "txt";
+  a.href = URL.createObjectURL(blob);
+  a.download = "output." + ext;
+  a.click();
+}
+
+async function generate() {
+  const input = document.getElementById("requirement");
+  const type = document.getElementById("type").value;
+  const chat = document.getElementById("chat");
+
+  if (!input.value.trim() || !type) {
+    alert("Enter requirement & select type");
+    return;
+  }
+
+  chat.appendChild(createMessage(input.value, true));
+  
+  const loader = document.createElement("div");
+  loader.className = "loader";
+  chat.appendChild(loader);
+
+  const res = await fetch("http://127.0.0.1:8000/generate", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      requirement: input.value,
+      type: type
+    })
+  });
+
+  const data = await res.json();
+  chat.removeChild(loader);
+
+  chat.appendChild(createMessage(data.result, false, type));
+
+  chat.scrollTop = chat.scrollHeight;
+  input.value = "";
+}
+</script>
+
+</body>
+</html>
