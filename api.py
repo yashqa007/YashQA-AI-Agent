@@ -36,3 +36,7 @@ def generate(data: RequestData):
         return {"error": "Invalid type"}
 
     return {"result": result}
+
+@app.options("/{full_path:path}")
+def preflight_handler():
+    return {"message": "OK"}

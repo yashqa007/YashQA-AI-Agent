@@ -296,14 +296,17 @@ async function generate() {
   loader.className = "loader";
   chat.appendChild(loader);
 
-  const res = await fetch("http://127.0.0.1:8000/generate", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      requirement: input.value,
-      type: type
-    })
-  });
+  const res = await fetch("https://yash-qa-ai-agent.onrender.com/generate", {
+  method: "POST",
+  mode: "cors",  // ✅ IMPORTANT
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    requirement: input.value,
+    type: type
+  })
+});
 
   const data = await res.json();
   chat.removeChild(loader);
